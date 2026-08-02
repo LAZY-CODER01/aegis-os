@@ -1,14 +1,21 @@
-from dataclasses import dataclass
-from typing import List
+from dataclasses import dataclass, field
 
-@dataclass(frozen=True)
+@dataclass
 class Command:
+
     executable: str
-    arguments: List[str]
-    requires_sudo: bool = False
+
+    arguments: list[str] = field(default_factory=list)
+
+    sudo: bool = False
+
     risk_score: int = 0
 
-    def to_shell(self) -> str:
-        return " ".join(
-            [self.executable, *self.arguments]
-        )
+    explanation: str = ""
+
+    def shell(self):
+
+        if self.sudo:
+            return "sudo " + self.executable + " " + " ".join(self.arguments)
+
+        return self.executable + " " + " ".join(self.arguments)

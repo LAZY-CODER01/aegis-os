@@ -1,15 +1,27 @@
+from dataclasses import dataclass
 from enum import Enum
+
 
 class IntentType(Enum):
 
-    FILESYSTEM = "filesystem"
+    PROCESS="PROCESS"
 
-    PROCESS = "process"
+    FILESYSTEM="FILESYSTEM"
 
-    NETWORK = "network"
+    NETWORK="NETWORK"
 
-    PACKAGE = "package"
+    PACKAGE="PACKAGE"
 
-    DIAGNOSTICS = "diagnostics"
+    SYSTEM="SYSTEM"
 
-    UNKNOWN = "unknown"
+    UNKNOWN="UNKNOWN"
+
+
+@dataclass
+class Intent:
+
+    type: IntentType
+
+    confidence: float
+
+    raw_text: str
